@@ -10,11 +10,13 @@
 </head>
 
 <body class="bg-slate-200 dark:bg-slate-700">
+    @livewire('partials.navbar')
     <main>
         {{ $slot }}
     </main>
+    @livewire('partials.footer')
     @livewireScripts
-    <script src="./node_modules/preline/dist/preline.js"></script>
+    <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
 </body>
 
 </html>
