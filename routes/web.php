@@ -16,13 +16,14 @@ use App\Livewire\ProductPage;
 use App\Livewire\SuccessPage;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', HomePage::class);
+Route::get('/', HomePage::class)->name('home');
 
 Route::get('/categories', CategoryPage::class)->name('index.category-page');
 Route::get('/carts', CartPage::class)->name('index.cart-page');
 
 Route::get('/products', ProductPage::class)->name('index.product-page');
-Route::get('/products/{product}', ProductDetailPage::class)->name('products.show');
+Route::get('/products/{slug}', ProductDetailPage::class)->name('products.show');
+
 Route::get('/checkout', CheckoutPage::class)->name('checkout.show');
 Route::get('/my-orders', MyOrdersPage::class)->name('my-orders.show');
 Route::get('/my-orders/{order}', MyOrderDetailPage::class)->name('my-order-detail.show');

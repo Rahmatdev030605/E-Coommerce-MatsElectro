@@ -1,4 +1,4 @@
-<div>
+<div x-data="{ showAllBrands: false }">
 
     <section class="py-20">
         <div class="max-w-xl mx-auto">
@@ -25,55 +25,68 @@
         <div class="justify-center max-w-6xl px-4 py-4 mx-auto lg:py-0">
             <div class="grid grid-cols-1 gap-6 lg:grid-cols-4 md:grid-cols-2">
 
-                <div class="bg-white rounded-lg shadow-md dark:bg-gray-800">
-                    <a href="" class="">
-                        <img src="https://i.pinimg.com/originals/a0/97/c3/a097c3c89b6d9a14f52f9515395d5220.png"
-                            alt="" class="object-cover w-full h-64 rounded-t-lg">
-                    </a>
-                    <div class="p-5 text-center">
-                        <a href="" class="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-300">
-                            Apple
+                <!-- Hanya tampilkan 4 merek secara default -->
+                @foreach ($brands->take(4) as $brand)
+                    <div class="bg-white rounded-lg shadow-md dark:bg-gray-800" wire:key="{{ $brand->id }}">
+                        <a href="#" class="">
+                            <div class="flex justify-center items-center w-full h-48">
+                                <img src="{{ url('storage', $brand->image) }}" alt="{{ $brand->name }}"
+                                    class="max-w-full max-h-full rounded-lg">
+                            </div>
                         </a>
+                        <div class="p-5 text-center">
+                            <a href=""
+                                class="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-300">
+                                {{ $brand->name }}
+                            </a>
+                        </div>
                     </div>
-                </div>
+                @endforeach
 
-                <div class="bg-white rounded-lg shadow-md dark:bg-gray-800">
-                    <a href="" class="">
-                        <img src="https://i.pinimg.com/originals/1d/35/83/1d35833251dec0ad373ad7cbbbf4f3e2.png"
-                            alt="" class="object-cover w-full h-64 rounded-t-lg">
-                    </a>
-                    <div class="p-5 text-center">
-                        <a href="" class="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-300">
-                            Samsung
+                <!-- Tampilkan semua merek saat tombol "See All" diklik -->
+                @foreach ($brands->skip(4) as $brand)
+                    <div class="bg-white rounded-lg shadow-md dark:bg-gray-800"
+                        @if (!$showAllBrands) style="display: none" @endif wire:key="{{ $brand->id }}">
+                        <a href="#" class="">
+                            <div class="flex justify-center items-center w-full h-48">
+                                <img src="{{ url('storage', $brand->image) }}" alt="{{ $brand->name }}"
+                                    class="max-w-full max-h-full rounded-lg">
+                            </div>
                         </a>
+                        <div class="p-5 text-center">
+                            <a href=""
+                                class="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-300">
+                                {{ $brand->name }}
+                            </a>
+                        </div>
                     </div>
-                </div>
+                @endforeach
 
-                <div class="bg-white rounded-lg shadow-md dark:bg-gray-800">
-                    <a href="" class="">
-                        <img src="https://salesindia.com/media/codazon_cache/brand/400x400/wysiwyg/codazon/main-content-22/Brand_logo/ONEPLUS_LOGO_.png"
-                            alt="" class="object-cover w-full h-64 rounded-t-lg">
-                    </a>
-                    <div class="p-5 text-center">
-                        <a href="" class="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-300">
-                            One Plus
-                        </a>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-lg shadow-md dark:bg-gray-800">
-                    <a href="" class="">
-                        <img src="https://i.pinimg.com/originals/72/15/96/721596edd1de9db231a385d52a9081f8.png"
-                            alt="" class="object-cover w-full h-64 rounded-t-lg">
-                    </a>
-                    <div class="p-5 text-center">
-                        <a href="" class="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-300">
-                            Xiaomi
-                        </a>
-                    </div>
+                <!-- Tombol "See All" -->
+                <div class="text-center col-span-4">
+                    @if ($showAllBrands)
+                        <button wire:click="showLess"
+                            class="px-6 py-3 text-lg justify-items-center font-semibold text-white bg-gray-500 rounded-lg hover:bg-gray-600">
+                            Back
+                        </button>
+                    @else
+                        <button wire:click="showAll"
+                            class="px-6 py-3 text-lg justify-items-center font-semibold text-white bg-blue-500 rounded-lg hover:bg-blue-600">
+                            See All
+                        </button>
+                    @endif
                 </div>
 
             </div>
         </div>
     </section>
 </div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const showAllBrandsButton = document.querySelector('[x-data] button');
+        showAllBrandsButton.addEventListener('click', function() {
+            document.querySelector('[x-data] [x-show]').classList.remove('hidden');
+        });
+    });
+</script>
