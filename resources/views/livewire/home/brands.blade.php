@@ -28,7 +28,7 @@
                 <!-- Hanya tampilkan 4 merek secara default -->
                 @foreach ($brands->take(4) as $brand)
                     <div class="bg-white rounded-lg shadow-md dark:bg-gray-800" wire:key="{{ $brand->id }}">
-                        <a href="#" class="">
+                        <a href="/products?selected_brands[0]={{ $brand->id }}" class="">
                             <div class="flex justify-center items-center w-full h-48">
                                 <img src="{{ url('storage', $brand->image) }}" alt="{{ $brand->name }}"
                                     class="max-w-full max-h-full rounded-lg">

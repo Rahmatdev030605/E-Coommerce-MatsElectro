@@ -1,3 +1,3 @@
 <div>
-    @livewire('product-page.product')
+    @livewire('product-page.index-product')
 </div>

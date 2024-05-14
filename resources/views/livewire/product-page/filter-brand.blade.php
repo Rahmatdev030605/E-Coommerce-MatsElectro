@@ -5,10 +5,10 @@
         @foreach ($brands as $brand)
         <li class="mb-4">
           <label wire:key="{{ $brand->id }}" for="{{ $brand->slug }}" class="flex items-center dark:text-gray-300">
-            <input type="checkbox" class="w-4 h-4 mr-2" id="{{$brand->slug }}" value="{{ $brand->id }}">
+            <input type="checkbox" class="w-4 h-4 mr-2" id="{{ $brand->slug }}" wire:model.live="selected_brands" value="{{ $brand->id }}">
             <span class="text-lg dark:text-gray-400">{{ $brand->name }}</span>
           </label>
         </li>
         @endforeach
     </ul>
-  </div>
+</div>
