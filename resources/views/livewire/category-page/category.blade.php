@@ -14,7 +14,7 @@
                                 <div class="flex-grow ms-3">
                                     <h3
                                         class="group-hover:text-blue-600 text-2xl font-semibold text-gray-800 dark:group-hover:text-gray-400 dark:text-gray-200">
-                                           {{ $category->name }}
+                                        {{ $category->name }}
                                     </h3>
                                 </div>
                             </div>

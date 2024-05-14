@@ -2,10 +2,13 @@
 
 namespace App\Livewire\ProductPage;
 
+use App\Helpers\CartManagement;
 use App\Livewire\Home\Brands;
+use App\Livewire\Partials\Navbar;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Product;
+use Livewire\Attributes\On;
 use Livewire\Attributes\Url;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -28,25 +31,23 @@ class IndexProduct extends Component
     #[Url]
     public $price_range = 50000000;
 
+    #[Url]
+    public $sort = 'latest';
 
-    // protected $listeners = [
-    //     'categoriesUpdated' => 'updateCategories',
-    //     'brandsUpdated' => 'updateBrands',
-    // ];
+    // add product to cart method
+    // public function addToCart($product_id)
+    // {
+    //     $total_count = CartManagement::addItemToCart($product_id);
 
-    public function updateCategories($categories)
-    {
-        $this->selected_categories = $categories;
-        // dd($this->selected_categories);
-        $this->resetPage();
-    }
+    //     $this->dispatch('update-cart-count', total_count: $total_count)->to(Navbar::class);
 
-    public function updateBrands($brands)
-    {
-        $this->selected_brands = $brands;
-        // dd($this->selected_brands);
-        $this->resetPage();
-    }
+    // }
+
+    // public function resetCart()
+    // {
+    //     CartManagement::resetCart();
+    //     $this->dispatch('update-cart-count', ['total_count' => 0]);
+    // }
 
     public function render()
     {
@@ -68,8 +69,16 @@ class IndexProduct extends Component
             $productQuery->where('on_sale', 1);
         }
 
-        if($this->price_range) {
+        if ($this->price_range) {
             $productQuery->whereBetween('price', [0, $this->price_range]);
+        }
+
+        if ($this->sort == 'latest') {
+            $productQuery->latest();
+        }
+
+        if ($this->sort == 'price') {
+            $productQuery->orderBy('price');
         }
 
         return view('livewire.product-page.index-product', [
